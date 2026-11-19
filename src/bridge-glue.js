@@ -8,14 +8,16 @@
   var base = cs && cs.src ? cs.src.replace(/[^\/]*$/, '') : '';
   if (!base) return;
   var APP = new URL(base).origin;
-  if (location.host !== 'food.aut.ac.ir') {
-    alert('AutWeek: open the reservation site (food.aut.ac.ir) and sign in first.');
+  var IS_LIB = location.host === 'digitallib.aut.ac.ir';
+  if (location.host !== 'food.aut.ac.ir' && !IS_LIB) {
+    alert('AutWeek: open the reservation site (food.aut.ac.ir) or the library (digitallib.aut.ac.ir) and sign in first.');
     return;
   }
+  var TARGET = IS_LIB ? 'lib' : 'food';
   // the bookmark opens the app tab itself (inside the tap, so pop-up blockers allow it)
   var w = window.__awW || window.open(base + '?bridge=' + Date.now(), 'autweek-app');
   if (!w) { alert('AutWeek: the new tab was blocked. Allow pop-ups for this site and try again.'); return; }
-  function send(o) { try { o.aw = 1; w.postMessage(o, APP); } catch (e) {} }
+  function send(o) { try { o.aw = 1; o.target = TARGET; w.postMessage(o, APP); } catch (e) {} }
 
   var started = false;
   window.addEventListener('message', function (e) {
@@ -26,7 +28,7 @@
     }).slice(0, 20).map(function (p) {
       return { id: String(p.id), type: String(p.type), name: String(p.name), group: Number(p.group), rest: Number(p.rest) };
     });
-    window.__runSync(list);
+    if (IS_LIB) window.__runLibrary(); else window.__runSync(list);
     var n = 0;
     (function poll() {
       var r = window.__syncRes;

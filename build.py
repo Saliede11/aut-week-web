@@ -39,7 +39,7 @@ def ascii_only(t):
     return ''.join(c if ord(c) < 128 else ('\\u%04x' % ord(c) if ord(c) < 0x10000 else '\\u%04x\\u%04x' % (0xD800 + ((ord(c) - 0x10000) >> 10), 0xDC00 + ((ord(c) - 0x10000) & 0x3FF))) for c in t)
 
 
-bridge = ascii_only(read(SRC + '/sync.js') + read(SRC + '/bridge-glue.js')).encode('ascii')
+bridge = ascii_only(read(SRC + '/sync.js') + '\n' + read(SRC + '/library.js') + '\n' + read(SRC + '/bridge-glue.js')).encode('ascii')
 sri = 'sha384-' + base64.b64encode(hashlib.sha384(bridge).digest()).decode()
 bridge_name = 'bridge-%s.js' % hashlib.sha256(bridge).hexdigest()[:10]
 write('%s/%s' % (OUT, bridge_name), bridge)

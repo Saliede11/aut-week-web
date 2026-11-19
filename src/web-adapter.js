@@ -10,6 +10,7 @@
  */
 (function () {
   var FOOD = 'https://food.aut.ac.ir';
+  var LIB = 'https://digitallib.aut.ac.ir';
   var KEY = 'aut-weekly-planner-web-state';
   var ua = navigator.userAgent || '';
   var ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -28,14 +29,15 @@
   }
 
   window.addEventListener('message', function (e) {
-    if (e.origin !== FOOD || !window.opener || e.source !== window.opener) return;
+    if ((e.origin !== FOOD && e.origin !== LIB) || !window.opener || e.source !== window.opener) return;
     var d = e.data;
     if (!d || d.aw !== 1) return;
     gotReply = true;
     watchdog(90000);
-    if (d.t === 'progress') emit({ t: 'progress', msg: String(d.msg || ''), web: true });
-    else if (d.t === 'result') { clearTimeout(timer); emit({ t: 'done', data: d.data || {} }); }
-    else if (d.t === 'error') { clearTimeout(timer); emit({ t: 'error', code: String(d.code || 'FAIL'), msg: String(d.msg || '') }); }
+    var tg = d.target === 'lib' ? 'lib' : 'food';
+    if (d.t === 'progress') emit({ t: 'progress', msg: String(d.msg || ''), web: true, target: tg });
+    else if (d.t === 'result') { clearTimeout(timer); emit({ t: 'done', data: d.data || {}, target: tg }); }
+    else if (d.t === 'error') { clearTimeout(timer); emit({ t: 'error', code: String(d.code || 'FAIL'), msg: String(d.msg || ''), target: tg }); }
   });
 
   function ascii(s) {
@@ -46,7 +48,7 @@
     web: true,
     getState: function () { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } },
     setState: function (s) { try { localStorage.setItem(KEY, String(s)); } catch (e) {} },
-    version: function () { return '0.3 (web)'; },
+    version: function () { return '0.4 (web)'; },
     platform: function () { return ios ? 'ios' : 'android'; },
     setTheme: function () {},
     bridgeMode: function () { return isBridge; },
@@ -62,11 +64,14 @@
       var tries = 0;
       (function hello() {
         if (gotReply || ++tries > 30) return;
-        try { window.opener.postMessage({ aw: 1, t: 'hello', places: places }, FOOD); } catch (e) {}
+        [FOOD, LIB].forEach(function (o) { try { window.opener.postMessage({ aw: 1, t: 'hello', places: places }, o); } catch (e) {} });
         setTimeout(hello, 800);
       })();
       watchdog(25000);
     },
+    startLibSync: function () { this.startSync('[]'); },
+    analyzeLib: function () { emit({ t: 'error', code: 'FAIL', msg: 'تحلیل ساختار فقط در اپ اندروید ممکن است.' }); },
+    logoutSite: function () {},
     analyze: function () { emit({ t: 'error', code: 'FAIL', msg: 'تحلیل ساختار فقط در اپ اندروید ممکن است.' }); },
     logout: function () {},
     // the bookmark (javascript: URL) that loads the connector, pinned to its exact content with SRI
