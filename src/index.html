@@ -30,6 +30,10 @@
   --book: #7a5b00;  --book-bg: #f8ecb8;
   --book5: #a8186a; --book5-bg: #fadcec;
   --late: #b3261e;  --late-bg: #fbe0de;
+  --asg: #3f3fa8;   --asg-bg: #e3e3f8;
+  --quiz: #0f766e;  --quiz-bg: #d5f0ec;
+  --exam: #b4123f;  --exam-bg: #fbdce5;
+  --cls: #475569;   --cls-bg: #e5e9ef;
   --bar: rgba(255, 255, 255, .86);
   --font: 'Vazirmatn', system-ui, 'Noto Sans Arabic', Tahoma, sans-serif;
 }
@@ -40,6 +44,8 @@
     --food: #f2a86f; --food-bg: #3b2817; --pool: #7bbcf0; --pool-bg: #12304a;
     --gym: #bba0f2; --gym-bg: #2a2045; --me: #7fcb9b; --me-bg: #17362a; --bar: rgba(22, 34, 42, .86);
     --book: #e8c860; --book-bg: #3a3012; --book5: #f08cc4; --book5-bg: #40172e; --late: #ff8a80; --late-bg: #451c19;
+  --asg: #a5a5f5; --asg-bg: #25254a; --quiz: #6fd6c8; --quiz-bg: #123a36; --exam: #ff8fae; --exam-bg: #4a1a28; --cls: #b4c0cf; --cls-bg: #263340;
+    --asg: #a5a5f5; --asg-bg: #25254a; --quiz: #6fd6c8; --quiz-bg: #123a36; --exam: #ff8fae; --exam-bg: #4a1a28; --cls: #b4c0cf; --cls-bg: #263340;
     color-scheme: dark;
   }
 }
@@ -97,6 +103,10 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f
 .t-book { --c: var(--book); --cb: var(--book-bg); }
 .t-book5 { --c: var(--book5); --cb: var(--book5-bg); }
 .t-late { --c: var(--late); --cb: var(--late-bg); }
+.t-asg { --c: var(--asg); --cb: var(--asg-bg); }
+.t-quiz { --c: var(--quiz); --cb: var(--quiz-bg); }
+.t-exam { --c: var(--exam); --cb: var(--exam-bg); }
+.t-class { --c: var(--cls); --cb: var(--cls-bg); }
 
 /* week grid */
 .week { --axis: 34px; --hh: 40px; overflow: hidden; }
@@ -125,7 +135,7 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f
 .strip button[aria-pressed="true"] span { color: inherit; opacity: .85; }
 .strip button.today:not([aria-pressed="true"]) strong { color: var(--accent); }
 .agenda { display: flex; flex-direction: column; gap: 8px; }
-.item { appearance: none; font: inherit; text-align: start; width: 100%; display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: start; padding: 10px 12px; border: 0; border-radius: 12px; background: var(--cb); color: var(--c); cursor: pointer; }
+.item { position: relative; appearance: none; font: inherit; text-align: start; width: 100%; display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: start; padding: 10px 12px; border: 0; border-radius: 12px; background: var(--cb); color: var(--c); cursor: pointer; }
 .item .t { font-size: 12.5px; font-variant-numeric: tabular-nums; line-height: 1.5; }
 .item .t em { display: block; font-style: normal; opacity: .8; }
 .item .n { font-weight: 600; font-size: 15px; line-height: 1.5; }
@@ -160,8 +170,8 @@ input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px s
 .fields .full { grid-column: 1 / -1; }
 
 /* bottom bar */
-.tabs { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--bar); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); padding-top: 6px; padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
-.tabs button { font: inherit; font-size: 11.5px; border: 0; background: none; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 2px 0; cursor: pointer; }
+.tabs { display: grid; grid-template-columns: repeat(5, 1fr); background: var(--bar); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); padding-top: 6px; padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
+.tabs button { font: inherit; font-size: 11px; border: 0; background: none; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 2px 0; cursor: pointer; }
 .tabs svg { width: 24px; height: 24px; }
 .tabs button[aria-current="page"] { color: var(--accent); font-weight: 600; }
 [data-platform="android"] .tabs { background: var(--surface); }
@@ -188,7 +198,7 @@ input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px s
 /* books */
 .dlrow { border-bottom: 1px solid var(--line); background: var(--surface); }
 .dlrow .axis { display: grid; place-items: center; font-size: 9px; color: var(--muted); }
-.dlcell { border-inline-start: 1px solid var(--line-soft); padding: 2px; min-width: 0; display: flex; }
+.dlcell { border-inline-start: 1px solid var(--line-soft); padding: 2px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .dlb { appearance: none; font: inherit; width: 100%; border: 0; border-radius: 5px; padding: 1px 0; background: var(--cb); color: var(--c); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 45%, transparent); font-size: 10px; font-weight: 600; line-height: 1.5; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bk { appearance: none; font: inherit; text-align: start; width: 100%; display: flex; flex-direction: column; gap: 1px; padding: 10px 12px; border: 0; border-inline-start: 5px solid var(--c); border-radius: 12px; background: var(--surface); color: var(--ink); cursor: pointer; box-shadow: inset 0 0 0 1px var(--line); }
 .bk .bn { font-weight: 600; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
@@ -201,6 +211,23 @@ input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px s
 .step { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .step button { font: inherit; font-size: 18px; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
 .step strong { font-size: 16px; font-variant-numeric: tabular-nums; }
+/* notes */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+@media (max-width: 330px) { .split { grid-template-columns: 1fr; } }
+.split .dl { grid-template-columns: 1fr; gap: 0; }
+.split .dl dt { font-size: 12px; }
+.split .dl dd { margin: 0 0 8px; overflow-wrap: anywhere; }
+.nbox { border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; background: var(--bg); min-width: 0; }
+.nhead { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.nhead strong { font-size: 13.5px; font-weight: 600; }
+.nbox textarea { font: inherit; font-size: 14px; line-height: 1.7; width: 100%; min-height: 128px; resize: vertical; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 8px; }
+.bell { font: inherit; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; display: grid; place-items: center; flex: none; }
+.bell svg { width: 19px; height: 19px; }
+.bell.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.nrem { font-size: 12px; color: var(--accent); font-weight: 600; }
+.nbox .btn { font-size: 13.5px; padding: 8px 10px; }
+.nbox select, .nbox input { font-size: 13.5px; padding: 6px 8px; }
+.hasnote::before { content: ''; position: absolute; top: 3px; inset-inline-end: 3px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .9; }
 [hidden] { display: none !important; }
 body { font-feature-settings: "kern", "liga"; -webkit-text-size-adjust: 100%; }
 .hact { display: flex; gap: 8px; }
@@ -212,6 +239,7 @@ body { font-feature-settings: "kern", "liga"; -webkit-text-size-adjust: 100%; }
 .pl { flex-direction: row; align-items: center; gap: 10px; color: var(--ink); font-size: 14px; padding: 5px 0; }
 .pl input { width: 20px; height: 20px; flex: none; }
 .pl small { color: var(--muted); }
+.pl.dis { opacity: .6; }
 .plist { display: flex; flex-direction: column; }
 .used { opacity: .55; }
 .btn:disabled { opacity: .6; cursor: default; }
@@ -240,6 +268,7 @@ textarea.log { width: 100%; direction: ltr; text-align: left; font-family: ui-mo
   <nav class="tabs" id="tabs" aria-label="بخش‌ها">
     <button type="button" data-tab="week"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>هفته</button>
     <button type="button" data-tab="day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9"/></svg>روز</button>
+    <button type="button" data-tab="lms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11.3v4.4c0 1.4 2.5 2.8 5.5 2.8s5.5-1.4 5.5-2.8v-4.4M21.5 9v5"/></svg>درس‌ها</button>
     <button type="button" data-tab="books"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3M9 7h6"/></svg>کتاب‌ها</button>
     <button type="button" data-tab="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>تنظیمات</button>
   </nav>
@@ -341,8 +370,9 @@ let PLATFORM = 'android';
 try { if (NATIVE && typeof Native.platform === 'function') PLATFORM = Native.platform() === 'ios' ? 'ios' : 'android'; } catch (e) {}
 const HOME_URL = 'https://food.aut.ac.ir/';
 const KEY = 'aut-weekly-planner-v3';
-const TYPES = { food: 'غذا', pool: 'استخر', gym: 'باشگاه', me: 'شخصی', book: 'کتاب' };
+const TYPES = { food: 'غذا', pool: 'استخر', gym: 'باشگاه', me: 'شخصی', class: 'کلاس', asg: 'تمرین', quiz: 'کوئیز', exam: 'امتحان', book: 'کتاب' };
 const LIB_URL = 'https://digitallib.aut.ac.ir/dl/search/';
+const LMS_URL = 'https://courses.aut.ac.ir/login/index.php';
 const DEFAULT_MEALS = { 'صبحانه': ['07:30', '09:00'], 'ناهار': ['12:30', '14:00'], 'شام': ['18:30', '20:00'], 'افطاری': ['18:00', '19:00'], 'سحری': ['04:00', '05:00'] };
 const PLACES = [
   { id: '28-14', type: 'food', name: 'پلی‌فود', group: 28, rest: 14 },
@@ -363,10 +393,10 @@ const PLACES = [
 ];
 const DEFAULT_ON = ['28-14', '28-23', '28-1', '28-2', '60-25', '62-27'];
 
-let state = { connected: false, lastSync: 0, imports: [], personal: [], meals: JSON.parse(JSON.stringify(DEFAULT_MEALS)), week: 0, places: DEFAULT_ON.slice(), log: [], theme: 'system', lib: { connected: false, lastSync: 0, books: [], renew: {} } };
+let state = { connected: false, lastSync: 0, imports: [], personal: [], meals: JSON.parse(JSON.stringify(DEFAULT_MEALS)), week: 0, places: DEFAULT_ON.slice(), log: [], theme: 'system', lib: { connected: false, lastSync: 0, books: [], renew: {} }, lms: { connected: false, lastSync: 0, items: [], courses: [] }, notes: {}, noteSeq: 0, auto: { food: false, lib: false, lms: true }, credUser: {} };
 try {
   const raw = NATIVE ? Native.getState() : localStorage.getItem(KEY);
-  if (raw) { const s = JSON.parse(raw); if (s && s.personal && s.meals) state = Object.assign(state, s); if (!state.lib || !Array.isArray(state.lib.books)) state.lib = { connected: false, lastSync: 0, books: [], renew: {} }; }
+  if (raw) { const s = JSON.parse(raw); if (s && s.personal && s.meals) state = Object.assign(state, s); if (!state.lib || !Array.isArray(state.lib.books)) state.lib = { connected: false, lastSync: 0, books: [], renew: {} }; if (!state.lms || !Array.isArray(state.lms.items)) state.lms = { connected: false, lastSync: 0, items: [], courses: [] }; if (!state.notes || typeof state.notes !== 'object') state.notes = {}; if (!state.noteSeq) state.noteSeq = 0; if (!state.auto || typeof state.auto !== 'object') state.auto = { food: false, lib: false, lms: true }; if (!state.credUser || typeof state.credUser !== 'object') state.credUser = {}; }
 } catch (e) {}
 function save() { try { const s = JSON.stringify(state); if (NATIVE) Native.setState(s); else localStorage.setItem(KEY, s); } catch (e) {} }
 function addLog(msg) {
@@ -375,7 +405,7 @@ function addLog(msg) {
   if (state.log.length > 80) state.log.splice(0, state.log.length - 80);
 }
 
-let busy = false, needLogin = false, note = '', progress = '', showLog = false, logoutArmed = null, anaBusy = false, anaNote = '', libBusy = false, libNeedLogin = false, libNote = '', libProgress = '', libLogoutArmed = null, queueLib = false;
+let busy = false, needLogin = false, note = '', progress = '', showLog = false, logoutArmed = null, anaBusy = false, anaNote = '', libBusy = false, libNeedLogin = false, libNote = '', libProgress = '', libLogoutArmed = null, queue = [], lmsBusy = false, lmsNeedLogin = false, lmsNote = '', lmsProgress = '', lmsLogoutArmed = null, showPast = false, credNote = {};
 const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>';
 const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
 const sysDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
@@ -389,7 +419,7 @@ function applyTheme() {
 }
 const todayIdx = () => (new Date().getDay() + 1) % 7;
 let tab = 'week', selDay = todayIdx();
-const visible = { food: true, pool: true, gym: true, me: true, book: true };
+const visible = { food: true, pool: true, gym: true, me: true, class: true, asg: true, quiz: true, exam: true, book: true };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = id => document.getElementById(id);
 const pf = (d, o) => { try { return new Intl.DateTimeFormat('fa-IR-u-ca-persian', o).format(d); } catch (e) { return ''; } };
@@ -433,6 +463,56 @@ function deadlines() {
   return out;
 }
 
+const lmsOn = () => !!(state.lms && state.lms.connected);
+const lmsCapable = () => NATIVE && typeof Native.startLmsSync === 'function';
+const sameDay = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+const LK = { assign: 'asg', quiz: 'quiz', exam: 'exam', other: 'asg' };
+const lmsType = it => LK[it.kind] || 'asg';
+const pfTime = ms => pf(new Date(ms), { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+function lmsLeft(ms) {
+  const d = ms - Date.now();
+  if (d < 0) return 'گذشته';
+  const m = Math.floor(d / 6e4), days = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60);
+  if (days >= 1) return faDigits(days) + ' روز' + (h ? ' و ' + faDigits(h) + ' ساعت' : '') + ' دیگر';
+  if (h >= 1) return faDigits(h) + ' ساعت' + (m % 60 ? ' و ' + faDigits(m % 60) + ' دقیقه' : '') + ' دیگر';
+  return faDigits(Math.max(1, m)) + ' دقیقه دیگر';
+}
+function lmsWhen(it) {
+  if (it.point) return (it.only === 'open' ? 'شروع: ' : it.only === 'close' ? 'پایان: ' : '') + pfTime(it.start);
+  return 'از ' + pfTime(it.start) + ' تا ' + pfTime(it.end);
+}
+// deadlines at 00:00 (the very start of a day) are shown at the end of the day before
+function pointSeg(ms, days) {
+  const dt = new Date(ms), mod = dt.getHours() * 60 + dt.getMinutes();
+  let day = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()), s, e;
+  if (mod === 0) { day = new Date(day.getFullYear(), day.getMonth(), day.getDate() - 1); s = 23 * 60 + 30; e = 24 * 60; } else { e = mod; s = Math.max(0, mod - 30); }
+  const d = days.findIndex(x => sameDay(x, day));
+  return d < 0 ? null : { day: d, start: s, end: e };
+}
+// -> { timed: events for the grid, allday: [per day] long windows (quiz open for many hours / days) }
+function lmsWeek() {
+  const out = { timed: [], allday: [[], [], [], [], [], [], []] };
+  if (!lmsOn()) return out;
+  const { days } = weekInfo(), DAY = 864e5;
+  (state.lms.items || []).forEach(it => {
+    const type = lmsType(it), base = { type, title: it.title, sub: it.course, status: '', color: '', tip: '', lms: it };
+    const addPoint = (ms, note) => { const sg = pointSeg(ms, days); if (sg) out.timed.push(Object.assign({}, base, sg, { note })); };
+    if (it.point) { addPoint(it.start, it.only === 'open' ? 'شروع' : it.only === 'close' ? 'پایان' : 'مهلت'); return; }
+    if (it.end - it.start >= 6 * 36e5) {
+      days.forEach((dd, d) => { const a = dd.getTime(), b = a + DAY; if (it.start < b && it.end > a) out.allday[d].push(it); });
+      addPoint(it.end, 'پایان');
+      return;
+    }
+    days.forEach((dd, d) => {
+      const a = dd.getTime(), b = a + DAY;
+      if (it.start >= b || it.end <= a) return;
+      const s = Math.max(it.start, a), e = Math.min(it.end, b);
+      out.timed.push(Object.assign({}, base, { day: d, start: Math.round((s - a) / 6e4), end: Math.max(Math.round((s - a) / 6e4) + 30, Math.round((e - a) / 6e4)), note: 'بازه' }));
+    });
+  });
+  return out;
+}
+
 function collect() {
   const evs = [], on = new Set(state.places);
   state.imports.filter(i => on.has(i.id)).forEach(imp => {
@@ -447,7 +527,8 @@ function collect() {
       }
     });
   });
-  state.personal.forEach(p => evs.push({ day: p.day, start: p.start, end: p.end, type: 'me', title: p.title, sub: '', status: '', color: '', tip: '', pid: p.id }));
+  lmsWeek().timed.forEach(e => evs.push(Object.assign({}, e, { sub: (e.note ? e.note + ' · ' : '') + e.sub })));
+  state.personal.forEach(p => evs.push({ day: p.day, start: p.start, end: p.end, type: p.kind === 'class' ? 'class' : 'me', title: p.title, sub: '', status: '', color: '', tip: '', pid: p.id }));
   return evs;
 }
 
@@ -469,9 +550,9 @@ function weekSwitch() {
   return '<div class="seg" role="group" aria-label="هفته"><button type="button" data-week="0" aria-pressed="' + (state.week === 0) + '">این هفته</button><button type="button" data-week="1" aria-pressed="' + (state.week === 1) + '">هفته بعد</button></div>';
 }
 function chipsRow(all, nBook) {
-  const counts = { food: 0, pool: 0, gym: 0, me: 0, book: nBook || 0 };
+  const counts = { food: 0, pool: 0, gym: 0, me: 0, class: 0, asg: 0, quiz: 0, exam: 0, book: nBook || 0 };
   all.forEach(e => counts[e.type]++);
-  return '<div class="chips" role="group" aria-label="نمایش نوع رویداد">' + Object.keys(TYPES).filter(k => k !== 'book' || libOn()).map(k =>
+  return '<div class="chips" role="group" aria-label="نمایش نوع رویداد">' + Object.keys(TYPES).filter(k => (k !== 'book' || libOn()) && (!['asg', 'quiz', 'exam'].includes(k) || lmsOn()) && (k !== 'class' || counts.class > 0)).map(k =>
     '<button type="button" class="chip t-' + k + '" data-type="' + k + '" aria-pressed="' + visible[k] + '"><i></i>' + TYPES[k] + ' <b>' + faDigits(counts[k]) + '</b></button>').join('') + '</div>';
 }
 
@@ -494,7 +575,7 @@ function viewWeek() {
     list.forEach((e, i) => {
       const top = (e.start - h0 * 60) / 60 * HH, hgt = Math.max(16, (e.end - e.start) / 60 * HH - 2), L = lay[i];
       const k = idxs.push(e) - 1;
-      cells += '<button type="button" class="blk t-' + e.type + (e.color === 'orange' ? ' used' : '') + '" data-ev="' + k + '" aria-label="' + esc(e.title + ' ' + DAYS[d] + ' ' + fmt(e.start)) + '" style="top:' + top + 'px;height:' + hgt + 'px;inset-inline-start:' + (L.lane / L.lanes * 100) + '%;width:calc(' + (100 / L.lanes) + '% - 2px)"><span>' + esc(e.title) + '</span></button>';
+      cells += '<button type="button" class="blk t-' + e.type + (e.color === 'orange' ? ' used' : '') + (hasNote(e) ? ' hasnote' : '') + '" data-ev="' + k + '" aria-label="' + esc(e.title + ' ' + DAYS[d] + ' ' + fmt(e.start)) + '" style="top:' + top + 'px;height:' + hgt + 'px;inset-inline-start:' + (L.lane / L.lanes * 100) + '%;width:calc(' + (100 / L.lanes) + '% - 2px)"><span>' + esc(e.title) + '</span></button>';
     });
     if (isToday) {
       const nm = now.getHours() * 60 + now.getMinutes();
@@ -503,15 +584,24 @@ function viewWeek() {
     body += '<div class="col' + (isToday ? ' today' : '') + '" style="height:' + H + 'px">' + cells + '</div>';
   }
   window.__evIdx = idxs;
-  const dls = deadlines(), nBook = dls.reduce((a, l) => a + l.length, 0);
+  const dls = deadlines(), nBook = dls.reduce((a, l) => a + l.length, 0), lw = lmsWeek();
   let dlRow = '';
-  if (visible.book && nBook) {
+  const showB = visible.book && nBook > 0, wins = lw.allday.map((l, d) => l.filter(it => visible[lmsType(it)]));
+  if (showB || wins.some(l => l.length)) {
     dlRow = '<div class="row dlrow"><div class="axis">مهلت</div>' + dls.map((l, d) => {
-      if (!l.length) return '<div class="dlcell"></div>';
-      const worst = l.some(x => x.inf.kind === 'late') ? 'late' : l.some(x => x.inf.kind === 'book5') ? 'book5' : 'book';
-      return '<div class="dlcell"><button type="button" class="dlb t-' + worst + '" data-bkday="' + d + '" aria-label="' + esc('مهلت کتاب ' + DAYS[d]) + '">کتاب' + (l.length > 1 ? ' ' + faDigits(l.length) : '') + '</button></div>';
+      let chips = '';
+      if (visible.book && l.length) {
+        const worst = l.some(x => x.inf.kind === 'late') ? 'late' : l.some(x => x.inf.kind === 'book5') ? 'book5' : 'book';
+        chips += '<button type="button" class="dlb t-' + worst + '" data-bkday="' + d + '" aria-label="' + esc('مهلت کتاب ' + DAYS[d]) + '">کتاب' + (l.length > 1 ? ' ' + faDigits(l.length) : '') + '</button>';
+      }
+      if (wins[d].length) {
+        const k = wins[d].some(it => lmsType(it) === 'exam') ? 'exam' : 'quiz';
+        chips += '<button type="button" class="dlb t-' + k + '" data-bkday="' + d + '" aria-label="' + esc('بازه ' + DAYS[d]) + '">' + TYPES[k] + (wins[d].length > 1 ? ' ' + faDigits(wins[d].length) : '') + '</button>';
+      }
+      return '<div class="dlcell">' + chips + '</div>';
     }).join('') + '</div>';
   }
+  window.__lmsWeek = wins;
   window.__dlWeek = dls;
   const empty = !state.imports.length ? '<div class="card empty">هنوز چیزی از سایت خوانده نشده است. دکمه به‌روزرسانی بالای صفحه را بزنید.</div>' : '';
   return syncStrip() + weekSwitch() + chipsRow(all, nBook) + empty +
@@ -532,13 +622,15 @@ function viewDay() {
     if (r.k === 'g') return '<button type="button" class="gap" data-gap="' + r.g.start + '-' + r.g.end + '"><span>' + fmt(r.g.start) + ' تا ' + fmt(r.g.end) + ' · زمان خالی ' + durText(r.g.end - r.g.start) + '</span><b>افزودن +</b></button>';
     const e = r.e, k = idxs.push(e) - 1;
     const sub = (e.sub ? esc(e.sub) + ' · ' : '') + TYPES[e.type] + (e.status ? ' · ' + esc(e.status) : '');
-    return '<button type="button" class="item t-' + e.type + (e.color === 'orange' ? ' used' : '') + '" data-ev="' + k + '"><span class="t">' + fmt(e.start) + '<em>' + fmt(e.end) + '</em></span><span class="n">' + esc(e.title) + '<small>' + sub + '</small>' + (e.food ? '<small>' + esc(e.food) + '</small>' : '') + '</span></button>';
+    return '<button type="button" class="item t-' + e.type + (e.color === 'orange' ? ' used' : '') + (hasNote(e) ? ' hasnote' : '') + '" data-ev="' + k + '"><span class="t">' + fmt(e.start) + '<em>' + fmt(e.end) + '</em></span><span class="n">' + esc(e.title) + '<small>' + sub + '</small>' + (e.food ? '<small>' + esc(e.food) + '</small>' : '') + '</span></button>';
   }).join('');
   window.__dlWeek = deadlines();
   const dlDay = visible.book ? window.__dlWeek[selDay] : [];
   const dlHtml = dlDay.map(x => '<button type="button" class="item t-' + x.inf.kind + '" data-bkid="' + esc(x.b.id) + '"><span class="t">مهلت<em>کتاب</em></span><span class="n">' + esc(x.b.title) + '<small>' + esc(x.b.loc) + ' · ' + KIND_TEXT[x.inf.kind] + '</small></span></button>').join('');
-  if (!rows.length && !dlDay.length) html = '<div class="card empty">برای ' + DAYS[selDay] + ' چیزی ثبت نشده است.</div>';
-  html = dlHtml + html;
+  const winDay = (visible.quiz || visible.exam) ? (window.__lmsWeekAll = lmsWeek().allday)[selDay].filter(it => visible[lmsType(it)]) : [];
+  if (!rows.length && !dlDay.length && !winDay.length) html = '<div class="card empty">برای ' + DAYS[selDay] + ' چیزی ثبت نشده است.</div>';
+  const winHtml = winDay.map(it => '<button type="button" class="item t-' + lmsType(it) + '" data-lmsid="' + esc(it.id) + '"><span class="t">بازه<em>' + TYPES[lmsType(it)] + '</em></span><span class="n">' + esc(it.title) + '<small>' + esc(it.course) + '</small></span></button>').join('');
+  html = winHtml + dlHtml + html;
   window.__evIdx = idxs;
   return syncStrip() + weekSwitch() + strip + '<div class="agenda">' + html + '</div>';
 }
@@ -585,17 +677,85 @@ function bookSheet(id) {
     '<button class="btn ghost" type="button" data-close="1">بستن</button>');
 }
 function daySheet(d) {
-  const l = (window.__dlWeek || [])[d] || [];
-  if (l.length === 1) { bookSheet(l[0].b.id); return; }
-  if (!l.length) return;
-  openSheet('<h2>مهلت کتاب‌ها · ' + DAYS[d] + '</h2><div class="agenda">' + l.map(x => '<button type="button" class="item t-' + x.inf.kind + '" data-bkid="' + esc(x.b.id) + '"><span class="t">مهلت<em>کتاب</em></span><span class="n">' + esc(x.b.title) + '<small>' + esc(x.b.loc) + ' · ' + KIND_TEXT[x.inf.kind] + '</small></span></button>').join('') + '</div><button class="btn ghost" type="button" data-close="1">بستن</button>');
+  const books = (window.__dlWeek || [])[d] || [], wins = lmsWeek().allday[d] || [];
+  const total = books.length + wins.length;
+  if (!total) return;
+  if (books.length === 1 && !wins.length) { bookSheet(books[0].b.id); return; }
+  if (wins.length === 1 && !books.length) { lmsSheet(wins[0].id); return; }
+  openSheet('<h2>مهلت‌ها و بازه‌ها · ' + DAYS[d] + '</h2><div class="agenda">' +
+    books.map(x => '<button type="button" class="item t-' + x.inf.kind + '" data-bkid="' + esc(x.b.id) + '"><span class="t">مهلت<em>کتاب</em></span><span class="n">' + esc(x.b.title) + '<small>' + esc(x.b.loc) + ' · ' + KIND_TEXT[x.inf.kind] + '</small></span></button>').join('') +
+    wins.map(it => '<button type="button" class="item t-' + lmsType(it) + '" data-lmsid="' + esc(it.id) + '"><span class="t">بازه<em>' + TYPES[lmsType(it)] + '</em></span><span class="n">' + esc(it.title) + '<small>' + esc(it.course) + '</small></span></button>').join('') +
+    '</div><button class="btn ghost" type="button" data-close="1">بستن</button>');
+}
+function lmsSheet(id) {
+  const it = (state.lms.items || []).find(x => x.id === id);
+  if (!it) return;
+  const t = lmsType(it);
+  const dl = '<dl class="dl">' +
+    '<dt>نوع</dt><dd><span class="pill t-' + t + '">' + TYPES[t] + '</span></dd>' +
+    (it.course ? '<dt>درس</dt><dd>' + esc(it.course) + '</dd>' : '') +
+    (it.point ? '<dt>' + (it.only === 'open' ? 'شروع' : it.only === 'close' ? 'پایان' : 'مهلت') + '</dt><dd>' + pfTime(it.start) + '</dd>' : '<dt>شروع</dt><dd>' + pfTime(it.start) + '</dd><dt>پایان</dt><dd>' + pfTime(it.end) + '</dd>') +
+    '<dt>باقی‌مانده</dt><dd>' + lmsLeft(it.point ? it.start : it.end) + '</dd>' +
+    (it.actionName ? '<dt>وضعیت سایت</dt><dd>' + esc(it.actionName) + '</dd>' : '') + '</dl>';
+  noteSheet(it.title, dl, { key: 'lms|' + it.id, ms: it.start, title: it.title },
+    '<p class="msg">ساعت ۰۰:۰۰ یعنی اول همان روز؛ در برنامهٔ هفتگی پایان روز قبل نشان داده می‌شود.</p><button class="btn ghost" type="button" data-close="1">بستن</button>');
+}
+function lmsStrip() {
+  let t = '—';
+  if (state.lms.lastSync) { const d = new Date(state.lms.lastSync); t = pf(d, { month: 'numeric', day: 'numeric' }) + ' ' + pf(d, { hour: '2-digit', minute: '2-digit' }); }
+  const txt = lmsBusy ? (lmsProgress || 'در حال به‌روزرسانی…') : lmsNeedLogin ? 'نشست ورود سامانه درس‌ها منقضی شده است' : 'آخرین به‌روزرسانی: <b>' + t + '</b>' + (lmsNote ? ' · ' + esc(lmsNote) : '');
+  return '<div class="card sync"><span class="dot' + (lmsNeedLogin ? ' off' : '') + '"></span><span id="lmsTxt">' + txt + '</span>' +
+    (lmsNeedLogin && !lmsBusy ? '<button type="button" class="chip" data-act="lmslogin">ورود دوباره</button>' : '') + '</div>';
+}
+function courseNames() {
+  const seen = {}, out = [];
+  (state.lms.courses || []).forEach(c => { const n = String(c.name).split(' - ')[0].trim(); if (n && !seen[n]) { seen[n] = 1; out.push(n); } });
+  return out;
+}
+function viewLms() {
+  const classes = state.personal.filter(p => p.kind === 'class').sort((a, b) => a.day - b.day || a.start - b.start);
+  const clsCard = '<section class="card sec"><h2>برنامهٔ ثابت کلاس‌ها</h2>' +
+    (classes.length ? '<ul class="list">' + classes.map(p => '<li class="t-class" style="background:var(--cb);color:var(--c)"><span>' + esc(p.title) + ' · ' + DAYS[p.day] + ' ' + fmt(p.start) + '–' + fmt(p.end) + '</span><button type="button" data-del="' + p.id + '">حذف</button></li>').join('') + '</ul>' : '<p>سامانهٔ درس‌ها ساعت کلاس را نمی‌دهد. روز و ساعت هر کلاس را یک بار اضافه کنید تا هر هفته در برنامه بیاید.</p>') +
+    '<button class="btn ghost" type="button" data-addclass="1">افزودن کلاس</button></section>';
+  if (!lmsOn()) {
+    return '<div class="card sec"><h2>درس‌ها و مهلت‌ها</h2><p>با وارد شدن به سامانهٔ درس‌ها، اپ مهلت تمرین‌ها، بازهٔ کوئیزها و تاریخ امتحان‌ها را با ساعت دقیق می‌خواند و در برنامهٔ هفتگی نشان می‌دهد. اپ فقط می‌خواند و چیزی تحویل نمی‌دهد.</p>' +
+      '<button class="btn" type="button" data-act="lmslogin">' + (WEB ? 'راهنمای اتصال به سامانهٔ درس‌ها' : 'ورود به سامانهٔ درس‌ها') + '</button><div class="msg" aria-live="polite">' + esc(lmsNote) + '</div></div>' + clsCard;
+  }
+  const now = Date.now(), all = (state.lms.items || []).slice().sort((a, b) => a.start - b.start);
+  const next = all.filter(it => (it.point ? it.start : it.end) >= now), past = all.filter(it => (it.point ? it.start : it.end) < now).reverse();
+  const card = it => {
+    const t = lmsType(it), live = !it.point && it.start <= now && it.end >= now;
+    return '<button type="button" class="bk t-' + t + '" data-lmsid="' + esc(it.id) + '"><span class="bn">' + esc(it.title) + '</span><span class="bm">' + esc(it.course || '—') + '</span>' +
+      '<span class="bc"><span>' + lmsWhen(it) + '</span><span class="pill">' + (live ? 'در حال برگزاری' : lmsLeft(it.point ? it.start : it.end)) + '</span></span>' +
+      '<span class="bm">' + TYPES[t] + (it.actionName ? ' · ' + esc(it.actionName) : '') + '</span></button>';
+  };
+  return lmsStrip() + '<div class="legend"><span class="t-asg"><i></i>تمرین</span><span class="t-quiz"><i></i>کوئیز</span><span class="t-exam"><i></i>امتحان</span></div>' +
+    (next.length ? '<div class="agenda">' + next.map(card).join('') + '</div>' : '<div class="card empty">مهلت یا کوئیز پیش‌رویی پیدا نشد.</div>') +
+    (past.length ? '<button type="button" class="btn ghost" data-pastbtn="1">' + (showPast ? 'پنهان کردن گذشته‌ها' : 'نمایش گذشته‌ها (' + faDigits(past.length) + ')') + '</button>' + (showPast ? '<div class="agenda">' + past.map(card).join('') + '</div>' : '') : '') +
+    clsCard;
 }
 
+const credCapable = () => NATIVE && !WEB && typeof Native.armCapture === 'function';
+function authBlock(k, on) {
+  if (WEB || !NATIVE || !on) return '';
+  const auto = !!(state.auto && state.auto[k]);
+  const saved = !!(state.credUser && state.credUser[k]);
+  let h = '<label class="pl" for="au_' + k + '"><input id="au_' + k + '" type="checkbox" data-auto="' + k + '"' + (auto ? ' checked' : '') + '><span>با باز کردن برنامه، خودکار به‌روزرسانی شود <small>(اگر تیک نباشد، فقط وقتی خودتان بزنید)</small></span></label>';
+  if (credCapable()) {
+    if (k === 'lib') {
+      h += '<label class="pl dis" for="rm_lib"><input id="rm_lib" type="checkbox" disabled><span>ذخیرهٔ رمز و ورود خودکار <small>(برای کتابخانه ممکن نیست؛ ورود آن کد امنیتی دارد)</small></span></label>';
+    } else {
+      h += '<label class="pl" for="rm_' + k + '"><input id="rm_' + k + '" type="checkbox" data-remember="' + k + '"' + (saved ? ' checked' : '') + '><span>ذخیرهٔ رمز و ورود خودکار' + (saved ? ' <small>(' + esc(state.credUser[k]) + ')</small>' : ' <small>(رمز فقط رمزنگاری‌شده در حافظهٔ خصوصی همین گوشی می‌ماند)</small>') + '</span></label>';
+    }
+    if (credNote[k]) h += '<div class="msg" aria-live="polite">' + esc(credNote[k]) + '</div>';
+  }
+  return h;
+}
 function viewSettings() {
   const meals = ['صبحانه', 'ناهار', 'شام'].map((m, i) =>
     '<strong>' + m + '</strong><label for="ms' + i + '">شروع<input id="ms' + i + '" type="time" data-meal="' + m + '" data-pos="0" value="' + state.meals[m][0] + '"></label>' +
     '<label for="me' + i + '">پایان<input id="me' + i + '" type="time" data-meal="' + m + '" data-pos="1" value="' + state.meals[m][1] + '"></label>').join('');
-  const mine = state.personal.map(p => '<li><span>' + esc(p.title) + ' · ' + DAYS[p.day] + ' ' + fmt(p.start) + '–' + fmt(p.end) + '</span><button type="button" data-del="' + p.id + '">حذف</button></li>').join('');
+  const mine = state.personal.map(p => '<li><span>' + (p.kind === 'class' ? 'کلاس: ' : '') + esc(p.title) + ' · ' + DAYS[p.day] + ' ' + fmt(p.start) + '–' + fmt(p.end) + '</span><button type="button" data-del="' + p.id + '">حذف</button></li>').join('');
   const places = PLACES.map((p, i) =>
     '<label class="pl" for="pl' + i + '"><input id="pl' + i + '" type="checkbox" data-place="' + p.id + '"' + (state.places.includes(p.id) ? ' checked' : '') + '><span>' + esc(p.name) + ' <small>(' + TYPES[p.type] + ')</small></span></label>').join('');
   const status = !state.connected ? 'متصل نیست' : needLogin ? 'نیاز به ورود دوباره' : 'متصل';
@@ -603,14 +763,20 @@ function viewSettings() {
   return '<section class="card sec"><h2>اتصال به سایت دانشگاه</h2>' +
     '<div class="kv"><span>وضعیت</span><span>' + status + '</span></div>' +
     '<div class="kv"><span>آخرین به‌روزرسانی</span><span>' + last + '</span></div>' +
-    '<div class="kv"><span>ذخیره داده</span><span>' + (WEB ? 'فقط در همین مرورگر' : 'فقط روی همین گوشی') + '</span></div>' +
+    authBlock('food', state.connected) + '<div class="kv"><span>ذخیره داده</span><span>' + (WEB ? 'فقط در همین مرورگر' : 'فقط روی همین گوشی') + '</span></div>' +
     '<p>اپ فقط اطلاعات رزروها را می‌خواند و هیچ رزروی را ثبت، لغو یا تغییر نمی‌دهد. رمز شما برای اپ دیده نمی‌شود.</p>' +
     '<button class="btn" type="button" data-act="login">' + (WEB ? 'راهنمای اتصال' : (state.connected ? 'ورود دوباره به سایت' : 'ورود به سایت')) + '</button>' +
     (state.connected ? '<button class="btn ghost" type="button" data-act="sync">به‌روزرسانی حالا</button><button class="btn danger" id="logout" type="button">' + (logoutArmed ? 'مطمئنید؟ دوباره بزنید' : 'خروج و پاک کردن داده‌ها') + '</button>' : '') + '</section>' +
+    '<section class="card sec"><h2>سامانهٔ درس‌ها (مودل)</h2>' +
+    '<div class="kv"><span>وضعیت</span><span>' + (!lmsOn() ? 'متصل نیست' : lmsNeedLogin ? 'نیاز به ورود دوباره' : 'متصل') + '</span></div>' +
+    '<div class="kv"><span>آخرین به‌روزرسانی</span><span>' + (state.lms.lastSync ? pf(new Date(state.lms.lastSync), { month: 'numeric', day: 'numeric' }) + ' ' + pf(new Date(state.lms.lastSync), { hour: '2-digit', minute: '2-digit' }) : '—') + '</span></div>' +
+    authBlock('lms', lmsOn()) + '<p>مهلت تمرین‌ها، بازهٔ کوئیزها و امتحان‌ها خوانده می‌شود. برای ورود، دکمهٔ «ورود با سامانه یکپارچه» را در صفحه بزنید و بعد «ورود انجام شد» را بزنید. هیچ چیزی تحویل داده نمی‌شود.</p>' +
+    '<button class="btn" type="button" data-act="lmslogin">' + (WEB ? 'راهنمای اتصال به سامانهٔ درس‌ها' : (lmsOn() ? 'ورود دوباره به سامانهٔ درس‌ها' : 'ورود به سامانهٔ درس‌ها')) + '</button>' +
+    (lmsOn() ? '<button class="btn ghost" type="button" data-act="lmssync">به‌روزرسانی درس‌ها</button><button class="btn danger" id="lmsLogout" type="button">' + (lmsLogoutArmed ? 'مطمئنید؟ دوباره بزنید' : 'خروج از سامانهٔ درس‌ها و پاک کردن مهلت‌ها') + '</button>' : '') + '</section>' +
     '<section class="card sec"><h2>کتابخانه دانشگاه</h2>' +
     '<div class="kv"><span>وضعیت</span><span>' + (!libOn() ? 'متصل نیست' : libNeedLogin ? 'نیاز به ورود دوباره' : 'متصل') + '</span></div>' +
     '<div class="kv"><span>آخرین به‌روزرسانی</span><span>' + (state.lib.lastSync ? pf(new Date(state.lib.lastSync), { month: 'numeric', day: 'numeric' }) + ' ' + pf(new Date(state.lib.lastSync), { hour: '2-digit', minute: '2-digit' }) : '—') + '</span></div>' +
-    '<p>اپ فهرست کتاب‌های امانتی و مهلت بازگشت را می‌خواند. ورود کتابخانه جدا از ورود سایت رزرو است. هیچ تمدید یا رزروی انجام نمی‌شود.</p>' +
+    authBlock('lib', libOn()) + '<p>اپ فهرست کتاب‌های امانتی و مهلت بازگشت را می‌خواند. ورود کتابخانه جدا از ورود سایت رزرو است. هیچ تمدید یا رزروی انجام نمی‌شود.</p>' +
     '<button class="btn" type="button" data-act="liblogin">' + (WEB ? 'راهنمای اتصال به کتابخانه' : (libOn() ? 'ورود دوباره به کتابخانه' : 'ورود به کتابخانه')) + '</button>' +
     (libOn() ? '<button class="btn ghost" type="button" data-act="libsync">به‌روزرسانی کتاب‌ها</button><button class="btn danger" id="libLogout" type="button">' + (libLogoutArmed ? 'مطمئنید؟ دوباره بزنید' : 'خروج از کتابخانه و پاک کردن کتاب‌ها') + '</button>' : '') + '</section>' +
     '<section class="card sec"><h2>ظاهر</h2><div class="seg seg3" role="group" aria-label="تم برنامه">' +
@@ -620,6 +786,8 @@ function viewSettings() {
     '<section class="card sec"><h2>برنامه شخصی</h2>' + (mine ? '<ul class="list">' + mine + '</ul>' : '<p>هنوز چیزی اضافه نکرده‌اید. از دکمه افزودن یا از زمان‌های خالی در نمای روز استفاده کنید.</p>') + '<button class="btn ghost" id="addMe" type="button">افزودن به برنامه شخصی</button></section>' +
     (WEB ? '' : '<section class="card sec"><h2>تحلیل ساختار سایت</h2><p>اپ صفحه رزرو را کامل بررسی می‌کند (کنترل‌ها، اسکریپت‌ها، رنگ خانه‌ها و درخواست‌هایی که خود سایت می‌فرستد) و نتیجه را در یک فایل در پوشه Download ذخیره می‌کند. این کار فقط می‌خواند. فایل ممکن است نام شما را داشته باشد، پس قبل از ارسال نگاهش کنید.</p>' +
     '<button class="btn" id="analyzeBtn" type="button"' + (anaBusy ? ' disabled' : '') + '>' + (anaBusy ? 'در حال تحلیل…' : 'شروع تحلیل') + '</button><div class="msg" id="anaTxt" aria-live="polite">' + esc(anaNote) + '</div></section>') +
+    (WEB || !lmsCapable() ? '' : '<section class="card sec"><h2>تحلیل ساختار سامانهٔ درس‌ها</h2><p>اپ چند صفحهٔ سامانه را فقط می‌خواند و نتیجه را در یک فایل در پوشه Download می‌گذارد. قبل از ارسال، فایل را نگاه کنید؛ ممکن است نام شما در آن باشد.</p>' +
+    '<button class="btn" id="analyzeLmsBtn" type="button"' + (anaBusy ? ' disabled' : '') + '>' + (anaBusy ? 'در حال تحلیل…' : 'شروع تحلیل سامانهٔ درس‌ها') + '</button></section>') +
     (WEB || !libCapable() ? '' : '<section class="card sec"><h2>تحلیل ساختار کتابخانه</h2><p>اپ صفحهٔ کتابخانه را بررسی می‌کند و نتیجه را در یک فایل در پوشه Download می‌گذارد. این کار فقط می‌خواند. قبل از ارسال، فایل را نگاه کنید؛ ممکن است شمارهٔ دانشجویی شما در آن باشد.</p>' +
     '<button class="btn" id="analyzeLibBtn" type="button"' + (anaBusy ? ' disabled' : '') + '>' + (anaBusy ? 'در حال تحلیل…' : 'شروع تحلیل کتابخانه') + '</button></section>') +
     '<section class="card sec"><h2>گزارش خطا</h2><p>اگر چیزی درست نمایش داده نشد، این گزارش را برای پشتیبان بفرستید. قبل از ارسال متن را بخوانید.</p>' +
@@ -630,15 +798,15 @@ function viewSettings() {
 function render() {
   const { days } = weekInfo();
   $('app').dataset.platform = PLATFORM;
-  $('title').textContent = tab === 'week' ? 'برنامه هفتگی' : tab === 'day' ? DAYS[selDay] : tab === 'books' ? 'کتاب‌ها' : 'تنظیمات';
-  $('weekLabel').textContent = (tab === 'settings' || tab === 'books') ? '' : (tab === 'day' ? pf(days[selDay], { day: 'numeric', month: 'long' }) : pf(days[0], { day: 'numeric', month: 'long' }) + ' تا ' + pf(days[6], { day: 'numeric', month: 'long' }));
-  $('refresh').hidden = (!state.connected && !libOn()) || tab === 'settings';
-  $('refresh').classList.toggle('spin', busy || libBusy);
-  $('fab').hidden = tab === 'settings' || tab === 'books';
+  $('title').textContent = tab === 'week' ? 'برنامه هفتگی' : tab === 'day' ? DAYS[selDay] : tab === 'books' ? 'کتاب‌ها' : tab === 'lms' ? 'درس‌ها' : 'تنظیمات';
+  $('weekLabel').textContent = (tab === 'settings' || tab === 'books' || tab === 'lms') ? '' : (tab === 'day' ? pf(days[selDay], { day: 'numeric', month: 'long' }) : pf(days[0], { day: 'numeric', month: 'long' }) + ' تا ' + pf(days[6], { day: 'numeric', month: 'long' }));
+  $('refresh').hidden = (!state.connected && !libOn() && !lmsOn()) || tab === 'settings';
+  $('refresh').classList.toggle('spin', busy || libBusy || lmsBusy);
+  $('fab').hidden = tab === 'settings' || tab === 'books' || tab === 'lms';
   $('themeBtn').innerHTML = effectiveDark() ? SUN : MOON;
   document.querySelectorAll('#tabs button').forEach(b => { if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
   const keep = $('main').scrollTop;
-  $('main').innerHTML = tab === 'week' ? viewWeek() : tab === 'day' ? viewDay() : tab === 'books' ? viewBooks() : viewSettings();
+  $('main').innerHTML = tab === 'week' ? viewWeek() : tab === 'day' ? viewDay() : tab === 'books' ? viewBooks() : tab === 'lms' ? viewLms() : viewSettings();
   $('main').scrollTop = keep;
   if (!state.connected && !$('onb')) showOnboarding();
   if (state.connected && $('onb')) $('onb').remove();
@@ -654,16 +822,78 @@ function openSheet(html) {
   $('app').appendChild(el);
   return el;
 }
-function eventSheet(e) {
-  openSheet('<h2>' + esc(e.title) + '</h2><dl class="dl"><dt>نوع</dt><dd>' + TYPES[e.type] + (e.sub ? ' · ' + esc(e.sub) : '') + '</dd>' + (e.food ? '<dt>غذا</dt><dd>' + esc(e.food) + '</dd>' : '') + '<dt>روز</dt><dd>' + DAYS[e.day] + '</dd><dt>ساعت</dt><dd>' + fmt(e.start) + ' تا ' + fmt(e.end) + '</dd>' +
-    (e.status ? '<dt>وضعیت</dt><dd>' + esc(e.status) + '</dd>' : '') + (e.tip && e.tip !== e.status ? '<dt>توضیح سایت</dt><dd>' + esc(e.tip) + '</dd>' : '') + '</dl>' +
-    (e.pid ? '<button class="btn danger" type="button" data-del="' + e.pid + '">حذف از برنامه شخصی</button>' : '') +
-    '<button class="btn ghost" type="button" data-close="1">بستن</button>');
+const BELL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>';
+let noteCtx = null, noteRemOpen = false, noteMsg = '', pendingRemind = false, noteTimer = null;
+const canRemind = () => NATIVE && typeof Native.setReminder === 'function';
+function evKey(e) {
+  if (e.lms) return 'lms|' + e.lms.id;
+  const d = weekInfo().days[e.day];
+  return [e.type, e.title, d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(), e.start].join('|');
 }
-function addSheet(day, start, end) {
+function evMs(e) {
+  if (e.lms) return e.lms.start;
+  const d = weekInfo().days[e.day];
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, e.start).getTime();
+}
+function hasNote(e) { if (e.type === 'food') return false; const n = state.notes[evKey(e)]; return !!(n && (n.text || n.remind)); }
+function noteInner() {
+  const c = noteCtx, n = state.notes[c.key] || {}, rem = n.remind, fired = rem && rem.at < Date.now();
+  let h = '<div class="nhead"><strong>یادداشت</strong>' + (canRemind() ? '<button type="button" id="bellBtn" class="bell' + (rem && !fired ? ' on' : '') + '" aria-pressed="' + !!(rem && !fired) + '" aria-label="' + (rem && !fired ? 'لغو یادآوری' : 'تنظیم یادآوری') + '">' + BELL + '</button>' : '') + '</div>' +
+    '<textarea id="noteTxt" maxlength="600" aria-label="یادداشت" placeholder="یادداشت اختیاری برای این زمان…">' + esc(n.text || '') + '</textarea>';
+  if (rem) h += '<div class="nrem">' + (fired ? 'یادآوری فرستاده شد: ' : 'یادآوری: ') + pfTime(rem.at) + '</div>';
+  if (noteRemOpen) {
+    h += '<label for="remSel">یادآوری قبل از شروع<select id="remSel"><option value="10">۱۰ دقیقه قبل</option><option value="30" selected>۳۰ دقیقه قبل</option><option value="60">۱ ساعت قبل</option><option value="180">۳ ساعت قبل</option><option value="1440">۱ روز قبل</option><option value="custom">زمان دلخواه…</option></select></label>' +
+      '<label for="remAt" id="remAtWrap" hidden>زمان یادآوری<input id="remAt" type="datetime-local"></label>' +
+      '<button type="button" class="btn" id="remGo">تنظیم یادآوری</button>';
+  }
+  if (noteMsg) h += '<div class="msg err" aria-live="polite">' + esc(noteMsg) + '</div>';
+  return h;
+}
+function refreshNote() { const b = $('nbox'); if (b && noteCtx) b.innerHTML = noteInner(); }
+function saveNoteText() {
+  const t = $('noteTxt'); if (!t || !noteCtx) return;
+  clearTimeout(noteTimer);
+  const text = t.value.trim(), n = state.notes[noteCtx.key] || {};
+  if (text) n.text = text; else delete n.text;
+  if (n.text || n.remind) state.notes[noteCtx.key] = n; else delete state.notes[noteCtx.key];
+  if (n.remind && n.remind.at > Date.now() && canRemind()) { try { Native.setReminder(n.remind.id, n.remind.at, noteCtx.title, (n.text || '').slice(0, 140) || 'یادآوری فعالیت'); } catch (e) {} }
+  save();
+}
+function setRemind() {
+  if (!noteCtx) return;
+  saveNoteText();
+  const sel = $('remSel') ? $('remSel').value : '30'; let at;
+  if (sel === 'custom') { const v = $('remAt') ? $('remAt').value : ''; if (!v) { noteMsg = 'زمان یادآوری را انتخاب کنید.'; refreshNote(); return; } at = new Date(v).getTime(); }
+  else at = noteCtx.ms - Number(sel) * 6e4;
+  if (!(at > Date.now())) { noteMsg = 'این زمان گذشته است. زمان دیگری انتخاب کنید.'; refreshNote(); return; }
+  const n = state.notes[noteCtx.key] || {};
+  const id = (n.remind && n.remind.id) || (state.noteSeq = (state.noteSeq || 0) + 1);
+  let r = 'err';
+  try { r = Native.setReminder(id, at, noteCtx.title, (n.text || '').slice(0, 140) || 'یادآوری فعالیت'); } catch (e) {}
+  if (r === 'ok') { n.remind = { at, id }; state.notes[noteCtx.key] = n; noteRemOpen = false; noteMsg = ''; pendingRemind = false; save(); render(); }
+  else if (r === 'perm') { pendingRemind = true; noteMsg = 'اجازهٔ اعلان را بدهید؛ بعد خودکار تنظیم می‌شود.'; }
+  else noteMsg = r === 'past' ? 'این زمان گذشته است.' : 'تنظیم یادآوری ممکن نشد.';
+  refreshNote();
+}
+function noteSheet(title, dlHtml, ctx, tail) {
+  noteCtx = ctx; noteRemOpen = false; noteMsg = ''; pendingRemind = false;
+  openSheet('<h2>' + esc(title) + '</h2><div class="split"><div class="side">' + dlHtml + '</div><div class="nbox" id="nbox">' + noteInner() + '</div></div>' + tail);
+}
+function eventSheet(e) {
+  if (e.lms) { lmsSheet(e.lms.id); return; }
+  const dl = '<dl class="dl"><dt>نوع</dt><dd>' + TYPES[e.type] + (e.sub ? ' · ' + esc(e.sub) : '') + '</dd>' + (e.food ? '<dt>غذا</dt><dd>' + esc(e.food) + '</dd>' : '') + '<dt>روز</dt><dd>' + DAYS[e.day] + '</dd><dt>ساعت</dt><dd>' + fmt(e.start) + ' تا ' + fmt(e.end) + '</dd>' +
+    (e.status ? '<dt>وضعیت</dt><dd>' + esc(e.status) + '</dd>' : '') + (e.tip && e.tip !== e.status ? '<dt>توضیح سایت</dt><dd>' + esc(e.tip) + '</dd>' : '') + '</dl>';
+  const tail = (e.pid ? '<button class="btn danger" type="button" data-del="' + e.pid + '">حذف از برنامه شخصی</button>' : '') + '<button class="btn ghost" type="button" data-close="1">بستن</button>';
+  if (e.type === 'food') { openSheet('<h2>' + esc(e.title) + '</h2>' + dl + tail); return; }
+  noteSheet(e.title, dl, { key: evKey(e), ms: evMs(e), title: e.title }, tail);
+}
+function addSheet(day, start, end, kind) {
   const dayOpts = DAYS.map((d, i) => '<option value="' + i + '"' + (i === day ? ' selected' : '') + '>' + d + '</option>').join('');
   const mm = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
-  const el = openSheet('<h2>برنامه شخصی جدید</h2><form id="meForm" class="fields"><label class="full" for="meTitle">عنوان<input id="meTitle" type="text" placeholder="مثلاً کلاس مکانیک کوانتومی" autocomplete="off"></label>' +
+  const cls = kind === 'class', names = courseNames();
+  const el = openSheet('<h2>' + (cls ? 'کلاس جدید' : 'برنامه شخصی جدید') + '</h2><form id="meForm" class="fields"><input type="hidden" id="meKind" value="' + (cls ? 'class' : 'me') + '">' +
+    '<label class="full" for="meTitle">' + (cls ? 'نام درس' : 'عنوان') + '<input id="meTitle" type="text" list="crsList" placeholder="' + (cls ? 'مثلاً اصول ترموهیدرولیک' : 'مثلاً مطالعه') + '" autocomplete="off"></label>' +
+    '<datalist id="crsList">' + (cls ? names.map(n => '<option value="' + esc(n) + '">').join('') : '') + '</datalist>' +
     '<label class="full" for="meDay">روز<select id="meDay">' + dayOpts + '</select></label>' +
     '<label for="meStart">شروع<input id="meStart" type="time" value="' + mm(start) + '"></label><label for="meEnd">پایان<input id="meEnd" type="time" value="' + mm(end) + '"></label>' +
     '<div class="full msg" id="meMsg" aria-live="polite"></div><button class="btn full" type="submit">افزودن</button></form>');
@@ -686,6 +916,9 @@ function showOnboarding() {
 function setOnbNote(t) { const o = $('onbNote'); if (o) { o.textContent = t || ''; o.className = 'msg' + (t ? ' err' : ''); } }
 
 function activePlaces() { return PLACES.filter(p => state.places.includes(p.id)).map(p => ({ id: p.id, type: p.type, name: p.name, group: p.group, rest: p.rest })); }
+function syncCredUsers() {
+  try { if (typeof Native.credUser !== 'function') return; ['food', 'lms'].forEach(k => { const u = Native.credUser(k); if (u) state.credUser[k] = String(u); else delete state.credUser[k]; }); } catch (e) {}
+}
 function login() {
   if (WEB) { openWebGuide(); return; }
   if (!NATIVE) { note = 'ورود فقط داخل اپ اندروید ممکن است.'; setOnbNote(note); render(); return; }
@@ -699,8 +932,8 @@ function openWebGuide() {
   openSheet('<h2>اتصال به سایت رزرو</h2>' +
     '<ol class="steps"><li><i>۱</i><span>یک‌بار «میان‌بر» را بسازید (پایین همین برگه).</span></li>' +
     '<li><i>۲</i><span>سایت رزرو را در همین مرورگر باز کنید و با پنل دانشجویی وارد شوید تا صفحه رزرو را ببینید.</span></li>' +
-    '<li><i>۳</i><span>میان‌بر را بزنید. برنامه در یک تب جدید باز می‌شود و رزروها را می‌خواند. برای کتاب‌ها همین کار را در سایت کتابخانه (با ورود جداگانه) تکرار کنید؛ همان میان‌بر کافی است. اطلاعات فقط به همین مرورگر می‌رسد و چیزی از رزروهای شما تغییر نمی‌کند.</span></li></ol>' +
-    '<button class="btn" id="wgOpen" type="button">باز کردن سایت رزرو</button><button class="btn ghost" id="wgOpenLib" type="button">باز کردن سایت کتابخانه</button>' +
+    '<li><i>۳</i><span>میان‌بر را بزنید. برنامه در یک تب جدید باز می‌شود و رزروها را می‌خواند. برای کتاب‌ها و درس‌ها همین کار را در سایت کتابخانه و سامانهٔ درس‌ها (با ورود جداگانه) تکرار کنید؛ همان میان‌بر کافی است. اطلاعات فقط به همین مرورگر می‌رسد و چیزی از رزروهای شما تغییر نمی‌کند.</span></li></ol>' +
+    '<button class="btn" id="wgOpen" type="button">باز کردن سایت رزرو</button><button class="btn ghost" id="wgOpenLib" type="button">باز کردن سایت کتابخانه</button><button class="btn ghost" id="wgOpenLms" type="button">باز کردن سامانهٔ درس‌ها</button>' +
     '<details><summary>ساخت میان‌بر در Safari آیفون</summary><ol>' +
     '<li>دکمه «کپی کد میان‌بر» را بزنید.</li>' +
     '<li>در Safari دکمه Share را بزنید، Add Bookmark را انتخاب کنید و نام آن را «برنامه هفتگی» بگذارید.</li>' +
@@ -722,12 +955,57 @@ function libLogin() {
 function doLibSync() {
   if (WEB && !(Native.bridgeMode && Native.bridgeMode())) { openWebGuide(); return; }
   if (!libCapable()) { libNote = 'این نسخهٔ برنامه از کتابخانه پشتیبانی نمی‌کند.'; render(); return; }
-  if (libBusy || busy) return;
+  if (libBusy || busy || lmsBusy) return;
   libBusy = true; libNeedLogin = false; libNote = ''; libProgress = 'در حال اتصال به کتابخانه…';
   render();
   Native.startLibSync();
 }
-function refreshAll() { if (state.connected) doSync(); else if (libOn()) doLibSync(); }
+function lmsLogin() {
+  if (WEB) { openWebGuide(); return; }
+  if (!lmsCapable()) { lmsNote = 'این نسخهٔ برنامه از سامانهٔ درس‌ها پشتیبانی نمی‌کند. نسخهٔ وب یا اندروید را استفاده کنید.'; render(); return; }
+  lmsNote = '';
+  Native.openLogin(LMS_URL);
+}
+function doLmsSync() {
+  if (WEB && !(Native.bridgeMode && Native.bridgeMode())) { openWebGuide(); return; }
+  if (!lmsCapable()) { lmsNote = 'این نسخهٔ برنامه از سامانهٔ درس‌ها پشتیبانی نمی‌کند.'; render(); return; }
+  if (lmsBusy || libBusy || busy) return;
+  lmsBusy = true; lmsNeedLogin = false; lmsNote = ''; lmsProgress = 'در حال اتصال به سامانهٔ درس‌ها…';
+  render();
+  Native.startLmsSync();
+}
+function doAnalyzeLms() {
+  if (!lmsCapable() || typeof Native.analyzeLms !== 'function') { anaNote = 'تحلیل سامانهٔ درس‌ها فقط در اپ اندروید ممکن است.'; render(); return; }
+  if (busy || libBusy || lmsBusy || anaBusy) return;
+  anaBusy = true; anaNote = 'در حال اتصال به سامانهٔ درس‌ها…'; render();
+  Native.analyzeLms();
+}
+function finishLms(data) {
+  lmsBusy = false; lmsNeedLogin = false;
+  const items = (data.items || []).filter(i => i && isFinite(i.start)).map(i => ({ id: String(i.id), kind: String(i.kind || 'other'), title: String(i.title || ''), course: String(i.course || ''), start: Number(i.start), end: Number(i.end || i.start), point: !!i.point, only: i.only || '', todo: i.todo == null ? null : !!i.todo, actionName: String(i.actionName || '') }));
+  const courses = (data.courses || []).map(c => ({ id: String(c.id || ''), name: String(c.name || '') })).filter(c => c.name);
+  state.lms = { connected: true, lastSync: data.syncedAt || Date.now(), items, courses };
+  lmsNote = (data.errors && data.errors.length) ? 'بعضی بخش‌ها خوانده نشد' : '';
+  (data.errors || []).forEach(e => addLog('سامانهٔ درس‌ها: ' + e));
+  addLog('سامانهٔ درس‌ها: ' + items.length + ' مورد، ' + courses.length + ' درس، ماه‌ها: ' + (data.months || []).join(','));
+  save(); render(); runNext();
+}
+function runNext() { const n = queue.shift(); if (n) setTimeout(n === 'lib' ? doLibSync : n === 'lms' ? doLmsSync : doSync, 250); }
+function chain(list) { queue = list.slice(); runNext(); }
+function bootSync() {
+  const l = [];
+  if (state.connected && state.auto.food && activePlaces().length) l.push('food');
+  if (libOn() && libCapable() && state.auto.lib) l.push('lib');
+  if (lmsOn() && lmsCapable() && state.auto.lms) l.push('lms');
+  chain(l);
+}
+function refreshAll() {
+  const l = [];
+  if (state.connected) l.push('food');
+  if (libOn() && libCapable()) l.push('lib');
+  if (lmsOn() && lmsCapable()) l.push('lms');
+  chain(l);
+}
 function finishLib(data) {
   libBusy = false; libNeedLogin = false;
   const old = {}; (state.lib.books || []).forEach(b => { old[b.id] = b; });
@@ -744,9 +1022,9 @@ function finishLib(data) {
   addLog('کتابخانه: ' + books.length + ' کتاب' + (data.renewKey ? ' · شمارندهٔ تمدید: ' + data.renewKey : ' · شمارندهٔ تمدید در سایت پیدا نشد'));
   if (data.jsonKeys) addLog('کلیدهای سایت: ' + data.jsonKeys.join(',').slice(0, 280));
   if (data.nonGet && data.nonGet.length) addLog('درخواست‌های غیر GET کتابخانه: ' + data.nonGet.join(' | ').slice(0, 280));
-  save(); render();
+  save(); render(); runNext();
 }
-function afterFood() { if (queueLib) { queueLib = false; setTimeout(doLibSync, 250); } }
+function afterFood() { runNext(); }
 function doAnalyze() {
   if (WEB) { anaNote = 'تحلیل ساختار فقط در اپ اندروید ممکن است.'; render(); return; }
   if (!NATIVE) { anaNote = 'تحلیل فقط داخل اپ اندروید ممکن است.'; render(); return; }
@@ -769,7 +1047,6 @@ function doSync() {
   if (busy || libBusy) return;
   const places = activePlaces();
   if (!places.length) { note = 'حداقل یک مکان را در تنظیمات انتخاب کنید.'; render(); return; }
-  queueLib = !WEB && libOn() && libCapable();
   busy = true; needLogin = false; note = ''; progress = 'در حال اتصال به سایت…';
   setOnbNote(progress);
   render();
@@ -801,8 +1078,23 @@ function finishSync(data) {
 }
 window.onNative = function (ev) {
   if (!ev) return;
+  if (ev.t === 'notifperm') { if (ev.granted && pendingRemind && $('nbox')) setRemind(); else if (!ev.granted) { pendingRemind = false; noteMsg = 'بدون اجازهٔ اعلان یادآوری کار نمی‌کند. از تنظیمات گوشی اجازه بدهید.'; refreshNote(); } return; }
+  if (ev.t === 'credsaved') { state.credUser[ev.source] = String(ev.user || ''); credNote[ev.source] = 'رمز ذخیره شد. از این پس در صورت نیاز خودکار وارد می‌شود.'; save(); render(); return; }
+  if (ev.t === 'credrefused') { credNote[ev.source] = ev.why === 'captcha' ? 'این صفحهٔ ورود کد امنیتی دارد؛ رمز ذخیره نشد.' : 'رمز ذخیره نشد.'; render(); return; }
   const isLib = ev.target === 'lib' && !anaBusy;
-  if (isLib && WEB && busy) busy = false;
+  const isLms = ev.target === 'lms' && !anaBusy;
+  if ((isLib || isLms) && WEB && busy) busy = false;
+  if (isLms && ev.t === 'progress') {
+    if (ev.web && !lmsBusy) { lmsBusy = true; closeSheet(); render(); }
+    lmsProgress = ev.msg || ''; const l = $('lmsTxt'); if (l) l.textContent = lmsProgress; return;
+  }
+  if (isLms && ev.t === 'done') { finishLms(ev.data || {}); return; }
+  if (isLms && ev.t === 'error') {
+    lmsBusy = false;
+    addLog('خطای سامانهٔ درس‌ها ' + (ev.code || '') + ': ' + (ev.msg || ''));
+    if (ev.code === 'LOGIN') { lmsNeedLogin = true; lmsNote = 'ورود تأیید نشد. دوباره وارد شوید.'; } else lmsNote = ev.msg || 'خطا در به‌روزرسانی سامانهٔ درس‌ها';
+    save(); render(); runNext(); return;
+  }
   if (isLib && ev.t === 'progress') {
     if (ev.web && !libBusy) { libBusy = true; closeSheet(); render(); }
     libProgress = ev.msg || ''; const l = $('libTxt'); if (l) l.textContent = libProgress; return;
@@ -812,7 +1104,7 @@ window.onNative = function (ev) {
     libBusy = false;
     addLog('خطای کتابخانه ' + (ev.code || '') + ': ' + (ev.msg || ''));
     if (ev.code === 'LOGIN') { libNeedLogin = true; libNote = 'ورود کتابخانه تأیید نشد. دوباره وارد شوید.'; } else libNote = ev.msg || 'خطا در به‌روزرسانی کتابخانه';
-    save(); render(); return;
+    save(); render(); runNext(); return;
   }
   if (ev.t === 'progress') {
     if (ev.web && !busy) { busy = true; closeSheet(); render(); }
@@ -822,7 +1114,7 @@ window.onNative = function (ev) {
     setOnbNote(progress); const o = $('onbNote'); if (o) o.className = 'msg';
     return;
   }
-  if (ev.t === 'loginDone') { if (ev.target === 'lib') doLibSync(); else doSync(); return; }
+  if (ev.t === 'loginDone') { if (ev.target === 'lib') doLibSync(); else if (ev.target === 'lms') doLmsSync(); else { queue = []; doSync(); } return; }
   if (ev.t === 'done') { finishSync(ev.data || {}); return; }
   if (ev.t === 'report') {
     anaBusy = false;
@@ -853,6 +1145,7 @@ document.addEventListener('click', e => {
   if (q('#onbGo')) { login(); return; }
   if (q('#themeBtn')) { state.theme = effectiveDark() ? 'light' : 'dark'; save(); applyTheme(); render(); return; }
   if ((x = q('[data-theme-set]'))) { state.theme = x.dataset.themeSet; save(); applyTheme(); render(); return; }
+  if (q('#wgOpenLms')) { try { window.open(LMS_URL, '_blank'); } catch (e) {} return; }
   if (q('#wgOpenLib')) { try { window.open(LIB_URL, '_blank'); } catch (e) {} return; }
   if (q('#wgOpen')) { try { window.open(HOME_URL, '_blank'); } catch (e) {} return; }
   if (q('#wgCopy')) {
@@ -863,7 +1156,8 @@ document.addEventListener('click', e => {
   }
   if (q('#analyzeBtn')) { doAnalyze(); return; }
   if (q('#analyzeLibBtn')) { doAnalyzeLib(); return; }
-  if ((x = q('[data-act]'))) { const a = x.dataset.act; if (a === 'login') login(); else if (a === 'liblogin') libLogin(); else if (a === 'libsync') doLibSync(); else doSync(); return; }
+  if (q('#analyzeLmsBtn')) { doAnalyzeLms(); return; }
+  if ((x = q('[data-act]'))) { const a = x.dataset.act; if (a === 'login') login(); else if (a === 'liblogin') libLogin(); else if (a === 'libsync') doLibSync(); else if (a === 'lmslogin') lmsLogin(); else if (a === 'lmssync') doLmsSync(); else { queue = []; doSync(); } return; }
   if (q('#refresh')) { refreshAll(); return; }
   if (q('#libLogout')) {
     if (!libLogoutArmed) { libLogoutArmed = setTimeout(() => { libLogoutArmed = null; render(); }, 3500); render(); return; }
@@ -872,6 +1166,24 @@ document.addEventListener('click', e => {
     state.lib = { connected: false, lastSync: 0, books: [], renew: {} }; libNeedLogin = false; libNote = ''; libBusy = false;
     save(); render(); return;
   }
+  if (q('#lmsLogout')) {
+    if (!lmsLogoutArmed) { lmsLogoutArmed = setTimeout(() => { lmsLogoutArmed = null; render(); }, 3500); render(); return; }
+    clearTimeout(lmsLogoutArmed); lmsLogoutArmed = null;
+    try { if (NATIVE && Native.logoutSite) Native.logoutSite('lms'); } catch (e) {} delete state.credUser.lms;
+    state.lms = { connected: false, lastSync: 0, items: [], courses: [] }; lmsNeedLogin = false; lmsNote = ''; lmsBusy = false;
+    save(); render(); return;
+  }
+  if ((x = q('[data-lmsid]'))) { lmsSheet(x.dataset.lmsid); return; }
+  if (q('[data-pastbtn]')) { showPast = !showPast; render(); return; }
+  if (q('[data-addclass]')) { addSheet(todayIdx(), 8 * 60, 9 * 60 + 30, 'class'); return; }
+  if (q('#bellBtn')) {
+    saveNoteText();
+    const n = state.notes[noteCtx.key] || {};
+    if (n.remind && n.remind.at > Date.now()) { try { Native.cancelReminder(n.remind.id); } catch (e) {} delete n.remind; if (n.text) state.notes[noteCtx.key] = n; else delete state.notes[noteCtx.key]; noteRemOpen = false; save(); render(); }
+    else noteRemOpen = !noteRemOpen;
+    noteMsg = ''; refreshNote(); return;
+  }
+  if (q('#remGo')) { setRemind(); return; }
   if ((x = q('[data-rn]'))) {
     const id = x.dataset.id, r = state.lib.renew[id] || { n: 0 };
     r.n = Math.max(0, Math.min(9, (r.n || 0) + Number(x.dataset.rn)));
@@ -882,7 +1194,7 @@ document.addEventListener('click', e => {
   if (q('#logout')) {
     if (!logoutArmed) { logoutArmed = setTimeout(() => { logoutArmed = null; render(); }, 3500); render(); return; }
     clearTimeout(logoutArmed); logoutArmed = null;
-    if (NATIVE) { if (Native.logoutSite) Native.logoutSite(libOn() ? 'food' : 'all'); else Native.logout(); }
+    if (NATIVE) { if (Native.logoutSite) Native.logoutSite(libOn() ? 'food' : 'all'); else Native.logout(); } delete state.credUser.food;
     state.connected = false; state.lastSync = 0; state.imports = []; needLogin = false; note = ''; busy = false;
     save(); render(); return;
   }
@@ -905,7 +1217,7 @@ document.addEventListener('submit', e => {
   msg.className = 'full msg err';
   if (!title) { msg.textContent = 'عنوان را بنویسید.'; return; }
   if (!s || !en || toMin(en) <= toMin(s)) { msg.textContent = 'ساعت پایان باید بعد از شروع باشد.'; return; }
-  state.personal.push({ id: Date.now(), title, day: Number($('meDay').value), start: toMin(s), end: toMin(en) });
+  state.personal.push({ id: Date.now(), kind: $('meKind').value === 'class' ? 'class' : 'me', title, day: Number($('meDay').value), start: toMin(s), end: toMin(en) });
   save(); closeSheet(); render();
 });
 document.addEventListener('change', e => {
@@ -916,6 +1228,21 @@ document.addEventListener('change', e => {
     if (toMin(next[1]) <= toMin(next[0])) { m.value = state.meals[name][pos]; return; }
     state.meals[name] = next; save(); return;
   }
+  const au = e.target.closest && e.target.closest('[data-auto]');
+  if (au) { state.auto[au.dataset.auto] = au.checked; save(); return; }
+  const rm = e.target.closest && e.target.closest('[data-remember]');
+  if (rm) {
+    const k = rm.dataset.remember;
+    if (rm.checked) {
+      credNote[k] = 'در صفحهٔ ورود، نام کاربری و رمز را بزنید و وارد شوید؛ سپس «ورود انجام شد».';
+      try { Native.armCapture(k); } catch (err) {}
+      if (k === 'lms') lmsLogin(); else login();
+    } else {
+      try { Native.credForget(k); } catch (err) {}
+      delete state.credUser[k]; credNote[k] = 'رمز ذخیره‌شده پاک شد.'; save(); render();
+    }
+    return;
+  }
   const p = e.target.closest && e.target.closest('[data-place]');
   if (p) {
     const id = p.dataset.place;
@@ -924,6 +1251,8 @@ document.addEventListener('change', e => {
     save();
   }
 });
+document.addEventListener('input', e => { if (e.target && e.target.id === 'noteTxt') { clearTimeout(noteTimer); noteTimer = setTimeout(() => { saveNoteText(); render(); }, 500); } });
+document.addEventListener('change', e => { if (e.target && e.target.id === 'remSel') { const w = $('remAtWrap'); if (w) w.hidden = e.target.value !== 'custom'; } });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
 
 applyTheme();
@@ -932,7 +1261,7 @@ render();
 try { if (document.fonts && document.fonts.load) document.fonts.load('600 16px Vazirmatn').then(f => { addLog('فونت وزیرمتن: ' + (f && f.length ? 'بارگذاری شد' : 'بارگذاری نشد')); save(); }).catch(() => { addLog('فونت وزیرمتن: بارگذاری نشد'); save(); }); } catch (e) {}
 try { if (NATIVE) addLog('نسخه اپ ' + Native.version()); } catch (e) {}
 if (WEB) { if (Native.bridgeMode && Native.bridgeMode()) setTimeout(doSync, 60); }
-else if (NATIVE && state.connected) doSync();
+else if (NATIVE) { syncCredUsers(); bootSync(); }
 
 </script>
 </body>
